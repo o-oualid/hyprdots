@@ -90,6 +90,8 @@ tooltip {
     transition: all 0.3s cubic-bezier(.55,-0.68,.48,1.682);
 }
 
+#idle_inhibitor,
+#backlight,
 #cpu,
 #memory,
 #battery,
@@ -133,11 +135,17 @@ tooltip {
     padding-right: ${e_paddin}px;
 }
 
-#custom-l_end {
+#custom-l_end{
     border-radius: ${b_radius}px 0px 0px ${b_radius}px;
     margin-left: ${e_margin}px;
     padding-left: ${e_paddin}px;
 }
+
+#custom-l_end+#battery {
+    background:red;
+}
+
+
 
 #custom-sr_end {
     border-radius: 0px;
