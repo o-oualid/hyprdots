@@ -1,13 +1,57 @@
     "mpris": {
-        "format": "{player_icon} {dynamic}",
-        "format-paused": "{status_icon} <i>{dynamic}</i>",
+        "format": "{status_icon}",
+        "format-paused": "{status_icon}",
         "player-icons": { 
             "default": "▶",
-            "mpv": "🎵"
+            "mpv": "🎵",
+            "spotify": "",
+            "firefox": ""
         },
         "status-icons": {
-            "paused": "⏸"
+            "playing":"▶",
+            "paused": "",
+            "stopped":""
         },
+        "tooltip-format": "{player_icon} {status_icon} {dynamic}",
+        
         // "ignored-players": ["firefox"]
     },
 
+    "mpris#next": {
+        "format": "{status_icon}",
+        "format-paused": "{status_icon}",
+        "player-icons": { 
+        "default": "▶",
+        "mpv": "🎵",
+        "spotify": "",
+        "firefox": ""
+    },
+    "on-click": "playerctl next",
+    "status-icons": {
+        "playing":"󰒭",
+        "paused": "󰒭",
+        "stopped":"󰒭"
+    },
+    "tooltip-format": "{player_icon} Next Track",
+
+    // "ignored-players": ["firefox"]
+},
+"mpris#previous": {
+    "format": "{status_icon}",
+    "format-paused": "{status_icon}",
+    "on-click": "playerctl previous",
+    "player-icons": { 
+    "default": "󰒮",
+    "mpv": "🎵",
+    "spotify": "",
+    "firefox": ""
+},
+"status-icons": {
+    "playing":"󰒮",
+    "paused": "󰒮",
+    "stopped":"󰒮"
+},
+"tooltip-format": "{player_icon} Previous Track",
+
+// "ignored-players": ["firefox"]
+},
