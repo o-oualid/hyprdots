@@ -4,6 +4,7 @@
 BaseDir=`dirname $(realpath $0)`
 ConfDir="$HOME/.config"
 ThemeCtl="$ConfDir/swww/wall.ctl"
+WallCache="$ConfDir/swww/.cache"
 
 
 # evaluate options
@@ -73,7 +74,11 @@ fi
 # swwwallpaper
 getWall=`grep '^1|' $ThemeCtl | cut -d '|' -f 3`
 getWall=`eval echo $getWall`
+getName=`basename $getWall`
 ln -fs $getWall $ConfDir/swww/wall.set
+ln -fs $WallCache/${ThemeSet}/${getName}.rofi $ConfDir/swww/wall.rofi
+ln -fs $WallCache/${ThemeSet}/${getName}.blur $ConfDir/swww/wall.blur
+ln -fs $WallCache/${ThemeSet}/${getName}.dcol $ConfDir/swww/wall.dcol
 $ConfDir/hypr/scripts/swwwallpaper.sh
 
 if [ $? -ne 0 ] ; then
@@ -124,7 +129,7 @@ if [ "${gtkMode}" == "light" ] ; then
     ncolor="-h string:bgcolor:#f4ede8 -h string:fgcolor:#9893a5 -h string:frcolor:#908caa"
 fi
 
-dunstify $ncolor "theme" -a "    ${ThemeSet}" -i "~/.config/dunst/icons/hyprdots.png" -r 91190 -t 2200
+dunstify $ncolor "theme" -a " ${ThemeSet}" -i "~/.config/dunst/icons/hyprdots.png" -r 91190 -t 2200
 
 
 # waybar

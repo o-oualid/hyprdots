@@ -6,9 +6,6 @@ Wall_Update()
 {
     local x_wall=$1
     local x_update=${x_wall/$HOME/"~"}
-    sed -i "/^1|/c\1|${curTheme}|${x_update}" $ctlFile
-    ln -fs $x_wall $wallSet
-
     cacheImg=`echo $x_wall | awk -F '/' '{print $NF}'`
 
     if [ ! -d ${cacheDir}/${curTheme} ] ; then
@@ -16,8 +13,27 @@ Wall_Update()
     fi
 
     if [ ! -f "${cacheDir}/${curTheme}/${cacheImg}" ] ; then
-        convert $wallSet -thumbnail 500x500^ -gravity center -extent 500x500 ${cacheDir}/${curTheme}/${cacheImg}
+        convert -strip $x_wall -thumbnail 500x500^ -gravity center -extent 500x500 ${cacheDir}/${curTheme}/${cacheImg}
     fi
+
+    if [ ! -f "${cacheDir}/${curTheme}/${cacheImg}.rofi" ] ; then
+        #convert -strip -resize 1000 -unsharp 0x1+1.0+0 $x_wall ${cacheDir}/${curTheme}/rofi.${cacheImg}
+        convert -strip -resize 2000 -gravity center -extent 2000 -quality 90 $x_wall ${cacheDir}/${curTheme}/${cacheImg}.rofi
+    fi
+
+    if [ ! -f "${cacheDir}/${curTheme}/${cacheImg}.blur" ] ; then
+        convert -strip -scale 10% -blur 0x3 -resize 100% $x_wall ${cacheDir}/${curTheme}/${cacheImg}.blur
+    fi
+
+    if [ ! -f "${cacheDir}/${curTheme}/${cacheImg}.dcol" ] ; then
+        magick $x_wall -colors 6 -define histogram:unique-colors=true -format "%c" histogram:info: > ${cacheDir}/${curTheme}/${cacheImg}.dcol
+    fi
+
+    sed -i "/^1|/c\1|${curTheme}|${x_update}" $ctlFile
+    ln -fs $x_wall $wallSet
+    ln -fs ${cacheDir}/${curTheme}/${cacheImg}.rofi $wallRfi
+    ln -fs ${cacheDir}/${curTheme}/${cacheImg}.blur $wallBlr
+    ln -fs ${cacheDir}/${curTheme}/${cacheImg}.dcol $wallDco
 }
 
 Wall_Change()
@@ -62,6 +78,8 @@ cacheDir="$HOME/.config/swww/.cache"
 ctlFile="$HOME/.config/swww/wall.ctl"
 wallSet="$HOME/.config/swww/wall.set"
 wallBlr="$HOME/.config/swww/wall.blur"
+wallRfi="$HOME/.config/swww/wall.rofi"
+wallDco="$HOME/.config/swww/wall.dcol"
 ctlLine=`grep '^1|' $ctlFile`
 
 if [  `echo $ctlLine | wc -w` -ne "1" ] ; then
@@ -113,19 +131,12 @@ while getopts "nps" option ; do
 done
 
 
-# check swww daemon
+# check swww daemon and set wall
 
 swww query
 if [ $? -eq 1 ] ; then
     swww init
 fi
 
-
-# set wall
-
 Wall_Set
-
-if [ $? -eq 0 ] ; then
-    convert -scale 10% -blur 0x2 -resize 100% $wallSet $wallBlr
-fi
 
