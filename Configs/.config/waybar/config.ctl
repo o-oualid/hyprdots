@@ -1,1 +1,1 @@
-1|33|top|( whyprlandlr/workspaces hyprland/window )|( clock )| ( network bluetooth pulseaudio pulseaudio#microphone backlight idle_inhibitor custom/updates ) ( tray ) ( custom/wallchange custom/mode custom/wbar custom/cliphist custom/power )
+1|33|top|( hyprland/workspaces hyprland/window )|( idle_inhibitor clock )| ( network bluetooth pulseaudio pulseaudio#microphone backlight custom/updates ) ( tray ) ( custom/wallchange custom/mode custom/wbar custom/cliphist custom/power )
