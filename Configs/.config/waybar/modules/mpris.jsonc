@@ -15,6 +15,7 @@
         "tooltip-format": "{player_icon} {status_icon} {dynamic}",
         
         // "ignored-players": ["firefox"]
+        "max-length": 1000
     },
 
     "mpris#next": {
